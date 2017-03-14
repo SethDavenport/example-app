@@ -13,6 +13,8 @@ import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/toarray';
+import 'rxjs/add/operator/do';
 
 @Component({
   selector: 'zoo-animal-list',
@@ -39,19 +41,49 @@ describe('Lion Page Container', () => {
   it('should select some lions from the Redux store', done => {
     const fixture = TestBed.createComponent(LionPageComponent);
     const lionPage = fixture.debugElement.componentInstance;
-
-    MockNgRedux.registerSelection(['lions', 'items'], [
+    const expectedSequence = [
       [ { name: 'I am a Lion!' } ],
       [ { name: 'I am a Lion!' }, { name: 'I am a second Lion!' } ]
-    ]);
+    ];
 
-    // TODO: is there a better way to expect on an observable sequence of
-    // values?
+    MockNgRedux.registerSelection(['lions', 'items'], expectedSequence);
 
-    lionPage.animals$.subscribe(
-      v => console.log('V', v), // Will be an expectation
-      null,
-      done);
+    lionPage.animals$
+      .toArray()
+      .subscribe(
+        actualSequence => expect(actualSequence).toEqual(expectedSequence),
+        null,
+        done);
+  });
+
+  it('should know when the animals are loading', done => {
+    const fixture = TestBed.createComponent(LionPageComponent);
+    const lionPage = fixture.debugElement.componentInstance;
+    const expectedSequence = [ true ];
+
+    MockNgRedux.registerSelection(['lions', 'loading'], expectedSequence);
+
+    lionPage.loading$
+      .toArray()
+      .subscribe(
+        actualSequence => expect(actualSequence).toEqual(expectedSequence),
+        null,
+        done);
+  });
+
+  it('should know when there\'s an error', done => {
+    const fixture = TestBed.createComponent(LionPageComponent);
+    const lionPage = fixture.debugElement.componentInstance;
+    const expectedSequence = [ true ];
+
+    MockNgRedux.registerSelection(['lions', 'error'], expectedSequence);
+
+    lionPage.error$
+      .toArray()
+      .subscribe(
+        actualSequence => expect(actualSequence).toEqual(expectedSequence),
+        null,
+        done);
   });
 
   it('should load lions on creation', () => {
