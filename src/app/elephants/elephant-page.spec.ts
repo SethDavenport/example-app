@@ -9,7 +9,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/toarray';
 import 'rxjs/add/operator/do';
 
-import { LionPageComponent } from './lion-page.container';
+import { ElephantPageComponent } from './elephant-page.container';
 import { AnimalActions } from '../animals/animal.actions';
 import { ANIMAL_TYPES } from '../animals/animal.types';
 
@@ -24,10 +24,10 @@ class MockAnimalListComponent {
   @Input() error: Observable<any>;
 };
 
-describe('Lion Page Container', () => {
+describe('Elephant Page Container', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LionPageComponent, MockAnimalListComponent],
+      declarations: [ElephantPageComponent, MockAnimalListComponent],
       imports: [NgReduxTestingModule],
       providers: [AnimalActions],
     }).compileComponents();
@@ -35,17 +35,17 @@ describe('Lion Page Container', () => {
     MockNgRedux.reset();
   });
 
-  it('should select some lions from the Redux store', done => {
-    const fixture = TestBed.createComponent(LionPageComponent);
-    const lionPage = fixture.debugElement.componentInstance;
+  it('should select some elephants from the Redux store', done => {
+    const fixture = TestBed.createComponent(ElephantPageComponent);
+    const elephantPage = fixture.debugElement.componentInstance;
     const expectedSequence = [
-      [ { name: 'I am a Lion!' } ],
-      [ { name: 'I am a Lion!' }, { name: 'I am a second Lion!' } ]
+      [ { name: 'I am an Elephant!' } ],
+      [ { name: 'I am an Elephant!' }, { name: 'I am a second Elephant!' } ]
     ];
 
-    MockNgRedux.registerSelection(['lions', 'items'], expectedSequence);
+    MockNgRedux.registerSelection(['elephants', 'items'], expectedSequence);
 
-    lionPage.animals$
+    elephantPage.animals$
       .toArray()
       .subscribe(
         actualSequence => expect(actualSequence).toEqual(expectedSequence),
@@ -54,13 +54,13 @@ describe('Lion Page Container', () => {
   });
 
   it('should know when the animals are loading', done => {
-    const fixture = TestBed.createComponent(LionPageComponent);
-    const lionPage = fixture.debugElement.componentInstance;
+    const fixture = TestBed.createComponent(ElephantPageComponent);
+    const elephantPage = fixture.debugElement.componentInstance;
     const expectedSequence = [ true ];
 
-    MockNgRedux.registerSelection(['lions', 'loading'], expectedSequence);
+    MockNgRedux.registerSelection(['elephants', 'loading'], expectedSequence);
 
-    lionPage.loading$
+    elephantPage.loading$
       .toArray()
       .subscribe(
         actualSequence => expect(actualSequence).toEqual(expectedSequence),
@@ -69,13 +69,13 @@ describe('Lion Page Container', () => {
   });
 
   it('should know when there\'s an error', done => {
-    const fixture = TestBed.createComponent(LionPageComponent);
-    const lionPage = fixture.debugElement.componentInstance;
+    const fixture = TestBed.createComponent(ElephantPageComponent);
+    const elephantPage = fixture.debugElement.componentInstance;
     const expectedSequence = [ true ];
 
-    MockNgRedux.registerSelection(['lions', 'error'], expectedSequence);
+    MockNgRedux.registerSelection(['elephants', 'error'], expectedSequence);
 
-    lionPage.error$
+    elephantPage.error$
       .toArray()
       .subscribe(
         actualSequence => expect(actualSequence).toEqual(expectedSequence),
@@ -83,13 +83,13 @@ describe('Lion Page Container', () => {
         done);
   });
 
-  it('should load lions on creation', () => {
+  it('should load elephants on creation', () => {
     const spy = MockNgRedux.spyOnDispatch();
-    const fixture = TestBed.createComponent(LionPageComponent);
+    const fixture = TestBed.createComponent(ElephantPageComponent);
 
     expect(spy).toHaveBeenCalledWith({
       type: AnimalActions.LOAD_STARTED,
-      meta: { animalType: ANIMAL_TYPES.LION },
+      meta: { animalType: ANIMAL_TYPES.ELEPHANT },
     });
   });
 });
