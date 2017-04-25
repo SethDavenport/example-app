@@ -43,7 +43,9 @@ describe('Elephant Page Container', () => {
       [ { name: 'I am an Elephant!' }, { name: 'I am a second Elephant!' } ]
     ];
 
-    MockNgRedux.registerSelection(['elephants', 'items'], expectedSequence);
+    const elephantItemStub = MockNgRedux.getSelectorStub(['elephants', 'items']);
+    expectedSequence.forEach(value => elephantItemStub.next(value));
+    elephantItemStub.complete();
 
     elephantPage.animals$
       .toArray()
@@ -56,14 +58,16 @@ describe('Elephant Page Container', () => {
   it('should know when the animals are loading', done => {
     const fixture = TestBed.createComponent(ElephantPageComponent);
     const elephantPage = fixture.debugElement.componentInstance;
-    const expectedSequence = [ true ];
 
-    MockNgRedux.registerSelection(['elephants', 'loading'], expectedSequence);
+    const stub = MockNgRedux.getSelectorStub(['elephants', 'loading']);
+    stub.next(false);
+    stub.next(true);
+    stub.complete();
 
     elephantPage.loading$
       .toArray()
       .subscribe(
-        actualSequence => expect(actualSequence).toEqual(expectedSequence),
+        actualSequence => expect(actualSequence).toEqual([ false, true ]),
         null,
         done);
   });
@@ -71,20 +75,22 @@ describe('Elephant Page Container', () => {
   it('should know when there\'s an error', done => {
     const fixture = TestBed.createComponent(ElephantPageComponent);
     const elephantPage = fixture.debugElement.componentInstance;
-    const expectedSequence = [ true ];
 
-    MockNgRedux.registerSelection(['elephants', 'error'], expectedSequence);
+    const stub = MockNgRedux.getSelectorStub(['elephants', 'error']);
+    stub.next(false);
+    stub.next(true);
+    stub.complete();
 
     elephantPage.error$
       .toArray()
       .subscribe(
-        actualSequence => expect(actualSequence).toEqual(expectedSequence),
+        actualSequence => expect(actualSequence).toEqual([ false, true ]),
         null,
         done);
   });
 
   it('should load elephants on creation', () => {
-    const spy = MockNgRedux.spyOnDispatch();
+    const spy = spyOn(MockNgRedux.mockInstance, 'dispatch');
     const fixture = TestBed.createComponent(ElephantPageComponent);
 
     expect(spy).toHaveBeenCalledWith({

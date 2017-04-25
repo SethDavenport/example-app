@@ -43,7 +43,9 @@ describe('Lion Page Container', () => {
       [ { name: 'I am a Lion!' }, { name: 'I am a second Lion!' } ]
     ];
 
-    MockNgRedux.registerSelection(['lions', 'items'], expectedSequence);
+    const lionItemsStub = MockNgRedux.getSelectorStub(['lions', 'items']);
+    expectedSequence.forEach(value => lionItemsStub.next(value));
+    lionItemsStub.complete();
 
     lionPage.animals$
       .toArray()
@@ -56,14 +58,16 @@ describe('Lion Page Container', () => {
   it('should know when the animals are loading', done => {
     const fixture = TestBed.createComponent(LionPageComponent);
     const lionPage = fixture.debugElement.componentInstance;
-    const expectedSequence = [ true ];
 
-    MockNgRedux.registerSelection(['lions', 'loading'], expectedSequence);
+    const lionsLoadingStub = MockNgRedux.getSelectorStub(['lions', 'loading']);
+    lionsLoadingStub.next(false);
+    lionsLoadingStub.next(true);
+    lionsLoadingStub.complete();
 
     lionPage.loading$
       .toArray()
       .subscribe(
-        actualSequence => expect(actualSequence).toEqual(expectedSequence),
+        actualSequence => expect(actualSequence).toEqual([ false, true ]),
         null,
         done);
   });
@@ -73,18 +77,21 @@ describe('Lion Page Container', () => {
     const lionPage = fixture.debugElement.componentInstance;
     const expectedSequence = [ true ];
 
-    MockNgRedux.registerSelection(['lions', 'error'], expectedSequence);
+    const lionsErrorStub = MockNgRedux.getSelectorStub(['lions', 'error']);
+    lionsErrorStub.next(false);
+    lionsErrorStub.next(true);
+    lionsErrorStub.complete();
 
     lionPage.error$
       .toArray()
       .subscribe(
-        actualSequence => expect(actualSequence).toEqual(expectedSequence),
+        actualSequence => expect(actualSequence).toEqual([ false, true ]),
         null,
         done);
   });
 
   it('should load lions on creation', () => {
-    const spy = MockNgRedux.spyOnDispatch();
+    const spy = spyOn(MockNgRedux.mockInstance, 'dispatch');
     const fixture = TestBed.createComponent(LionPageComponent);
 
     expect(spy).toHaveBeenCalledWith({

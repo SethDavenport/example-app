@@ -17,7 +17,7 @@
   "dependencies": {
     "@angular-redux/form": "^6.2.0-alpha",
     "@angular-redux/router": "^6.1.0",
-    "@angular-redux/store": "^6.2.0-alpha.7",
+    "@angular-redux/store": "^6.2.0-alpha.10",
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
     "@angular/core": "^4.0.0",
