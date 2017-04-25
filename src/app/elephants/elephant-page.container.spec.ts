@@ -6,7 +6,7 @@ import { NgRedux } from '@angular-redux/store';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/toarray';
+import 'rxjs/add/operator/toArray';
 import 'rxjs/add/operator/do';
 
 import { ElephantPageComponent } from './elephant-page.container';
