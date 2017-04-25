@@ -33,10 +33,10 @@ describe('Feedback Form Component', () => {
 
     const feedbackCommentsStub = MockNgRedux.getSelectorStub(['feedback', 'comments']);
     feedbackCommentsStub.next('h');
-    feedbackCommentsStub.next('he'),
-    feedbackCommentsStub.next('hel'),
-    feedbackCommentsStub.next('hell'),
-    feedbackCommentsStub.next('hello'),
+    feedbackCommentsStub.next('he');
+    feedbackCommentsStub.next('hel');
+    feedbackCommentsStub.next('hell');
+    feedbackCommentsStub.next('hello');
     feedbackCommentsStub.complete();
 
     form.charsLeft$
