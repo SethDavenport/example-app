@@ -3,8 +3,12 @@ import { NgRedux, select } from '@angular-redux/store';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-interface Order {}
-interface Project {}
+interface Order {
+  id: string;
+}
+interface Project {
+  id: string;
+}
 
 @Injectable()
 export class OrderActions {
@@ -16,35 +20,35 @@ export class OrderActions {
 }
 
 export function getCurrentProject(order: Order) {
-  return {};
+  return { id: 'foo' };
 }
 
 @Component({
-	selector: 'summary-component',
-	//templateUrl: 'summary.template.html',
+  selector: 'zoo-summary-component',
+  // templateUrl: 'summary.template.html',
   template: '<p>Whatever</p>'
 })
 export class SummaryComponent implements OnDestroy {
-	@select('order')
-	private order$: Observable<Order>;
+  @select('order')
+  private order$: Observable<Order>;
 
-	@select(state => getCurrentProject(state.order))
-	private currentProject$: Observable<Project>;
+  @select(state => getCurrentProject(state.order))
+  private currentProject$: Observable<Project>;
 
-	private order: Order;
-	private subscription: Subscription;
+  private order: Order;
+  private subscription: Subscription;
 
-	constructor(private actions: OrderActions) {
-		this.subscription = this.order$.subscribe(order => this.order = order);
-	}
+  constructor(private actions: OrderActions) {
+    this.subscription = this.order$.subscribe(order => this.order = order);
+  }
 
-	ngOnDestroy(): void {
-		if (this.subscription) {
-			this.subscription.unsubscribe();
-		}
-	}
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 
-	navigateToAuditTeam() {
-		this.actions.goToNextStep(this.order);
-	}
+  navigateToAuditTeam() {
+    this.actions.goToNextStep(this.order);
+  }
 }

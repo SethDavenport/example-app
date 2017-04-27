@@ -4,19 +4,19 @@ import { SummaryComponent, OrderActions } from './malaugrim.component';
 
 describe('malaugrim', () => {
 
-	let fixture: ComponentFixture<SummaryComponent>;
+  let fixture: ComponentFixture<SummaryComponent>;
 
-	beforeEach(() => {
-		TestBed.configureTestingModule({
-			imports: [NgReduxTestingModule/*, AccordionModule, SharedModule*/],
-			declarations: [SummaryComponent/*, OrderDataComponent, OrderLocationsComponent, AuditTypesListingComponent*/],
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [NgReduxTestingModule/*, AccordionModule, SharedModule*/],
+      declarations: [SummaryComponent/*, OrderDataComponent, OrderLocationsComponent, AuditTypesListingComponent*/],
       providers: [OrderActions],
-		}).compileComponents();
+    }).compileComponents();
 
-		MockNgRedux.reset();
-	});
+    MockNgRedux.reset();
+  });
 
-	fit('should pass', () => {
-		fixture = TestBed.createComponent(SummaryComponent);
-	})
+  it('should pass', () => {
+    fixture = TestBed.createComponent(SummaryComponent);
+  });
 });
