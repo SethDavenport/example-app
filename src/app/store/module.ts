@@ -16,24 +16,29 @@ import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { IAppState } from './model';
 import { rootReducer } from './reducers';
 import { RootEpics } from './epics';
+import { environment } from '../../environments/environment';
 
 @NgModule({
   imports: [NgReduxModule, NgReduxRouterModule],
   providers: [RootEpics],
 })
 export class StoreModule {
+  static initialState: IAppState = {};
+
   constructor(
     public store: NgRedux<IAppState>,
     devTools: DevToolsExtension,
     ngReduxRouter: NgReduxRouter,
     rootEpics: RootEpics,
   ) {
+    console.log('COnfiguring the store');
+
     // Tell Redux about our reducers and epics. If the Redux DevTools
     // chrome extension is available in the browser, tell Redux about
     // it too.
     store.configureStore(
       rootReducer,
-      {},
+      StoreModule.initialState,
       [ createLogger(), ...rootEpics.createEpics() ],
       devTools.isEnabled() ? [ devTools.enhancer() ] : []);
 
@@ -42,7 +47,18 @@ export class StoreModule {
       ngReduxRouter.initialize();
     }
 
-    // Enable syncing of Angular form state with our Redux store.
+    //   Enable syncing of Angular form state with our Redux store.
     provideReduxForms(store);
+
+    // Don't lose store contents during HMR.
+    // Move this to appModule instead?
+    if (environment.hmr) {
+      if (module['hot']) {
+        module['hot'].dispose((): void => {
+          StoreModule.initialState = store.getState();
+          console.log('DISPOSE', store.getState());
+        });
+      }
+    }
   }
 }

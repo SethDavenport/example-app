@@ -13,6 +13,7 @@ const INITIAL_STATE: IAnimalList = {
 export function createAnimalAPIReducer(animalType: AnimalType) {
   return function animalReducer(state: IAnimalList = INITIAL_STATE,
     action: AnimalAPIAction): IAnimalList {
+
     if (!action.meta || action.meta.animalType !== animalType) {
       return state;
     }
