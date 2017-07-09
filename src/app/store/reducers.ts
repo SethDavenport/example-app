@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers, Reducer } from 'redux';
 import { composeReducers, defaultFormReducer } from '@angular-redux/form';
 import { routerReducer } from '@angular-redux/router';
 
@@ -12,5 +12,5 @@ export const rootReducer = composeReducers(
   combineReducers({
     elephant: createAnimalAPIReducer(ANIMAL_TYPES.ELEPHANT),
     lion: createAnimalAPIReducer(ANIMAL_TYPES.LION),
-    router: routerReducer,
+    router: routerReducer as Reducer<any>,
   }));
