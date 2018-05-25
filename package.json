@@ -13,25 +13,25 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-redux/form": "^6.5.2",
-    "@angular-redux/router": "^6.3.1",
-    "@angular-redux/store": "^6.5.6",
-    "@angular/common": "^4.1.0",
-    "@angular/compiler": "^4.1.0",
-    "@angular/core": "^4.1.0",
-    "@angular/forms": "^4.1.0",
-    "@angular/http": "^4.1.0",
-    "@angular/platform-browser": "^4.1.0",
-    "@angular/platform-browser-dynamic": "^4.1.0",
-    "@angular/router": "^4.1.0",
+    "@angular-redux/form": "^9.0.0-beta.0",
+    "@angular-redux/router": "^9.0.0-beta.0",
+    "@angular-redux/store": "^9.0.0-beta.0",
+    "@angular/common": "^6.0.3",
+    "@angular/compiler": "^6.0.3",
+    "@angular/core": "^6.0.3",
+    "@angular/forms": "^6.0.3",
+    "@angular/http": "^6.0.3",
+    "@angular/platform-browser": "^6.0.3",
+    "@angular/platform-browser-dynamic": "^6.0.3",
+    "@angular/router": "^6.0.3",
     "core-js": "^2.4.1",
     "flux-standard-action": "^1.2.0",
     "ramda": "^0.23.0",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
     "redux-observable": "^0.14.1",
-    "rxjs": "^5.3.0",
-    "zone.js": "^0.8.9"
+    "rxjs": "^6.1.0",
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@angular/cli": "1.0.1",
@@ -51,6 +51,6 @@
     "protractor": "~5.1.1",
     "ts-node": "~3.0.2",
     "tslint": "~5.1.0",
-    "typescript": "^2.4.1"
+    "typescript": "2.7.2"
   }
 }
